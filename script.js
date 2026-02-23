@@ -5,19 +5,19 @@ class Navbar {
     constructor() {
         this.navbar = document.getElementById('navbar');
         this.toggle = document.getElementById('nav-toggle');
-        this.menu = document.getElementById('nav-menu');
+        this.menu   = document.getElementById('nav-menu');
         this.isOpen = false;
 
         const logo = this.navbar.querySelector('.nav-logo');
-        const row = document.createElement('div');
+        const row  = document.createElement('div');
         row.classList.add('nav-top-row');
         this.navbar.insertBefore(row, logo);
         row.appendChild(logo);
         row.appendChild(this.toggle);
 
         this.toggle.addEventListener('click', () => this.toggleMenu());
-        this.menu.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => this.closeMenu());
+        this.menu.querySelectorAll('.nav-link').forEach(l => {
+            l.addEventListener('click', () => this.closeMenu());
         });
     }
 
@@ -47,99 +47,102 @@ class Navbar {
 }
 
 /* ========================================
-   Helper
+   Helpers
    ======================================== */
 function isPortraitMobile() {
     return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 }
 
 /* ========================================
-   Smooth Glitchy Distortion Reveal
+   Portrait Distortion Reveal
    ======================================== */
 class PortraitReveal {
     constructor() {
         this.container = document.querySelector('.portrait-container');
         if (!this.container) return;
 
-        // Canvas sits on top of both images
         this.canvas = document.createElement('canvas');
         this.canvas.classList.add('portrait-canvas');
         this.container.appendChild(this.canvas);
         this.ctx = this.canvas.getContext('2d');
 
-        // Base image (already in DOM as .portrait-base)
-        this.baseImg = document.querySelector('.portrait-base');
-
-        // Overlay image — drawn via canvas
-        this.overlayImg = new Image();
+        this.overlayImg    = new Image();
         this.overlayImg.src = 'sec_col_potrait.png';
         this.overlayLoaded = false;
         this.overlayImg.onload = () => { this.overlayLoaded = true; };
 
-        this.mouseX = -9999;
-        this.mouseY = -9999;
+        this.mouseX        = -9999;
+        this.mouseY        = -9999;
         this.revealStrength = 0;
         this.targetStrength = 0;
-        this.time = 0;
+        this.time           = 0;
 
-        // Resize after fonts/layout settle
-        requestAnimationFrame(() => {
+        // Wait for layout to fully settle — same 300ms strategy as HyperspaceIntro
+        // so both are in sync and dimensions are stable before anything is measured
+        setTimeout(() => {
             requestAnimationFrame(() => {
                 this.resize();
+                // Re-check after another frame in case of iOS bounce
+                requestAnimationFrame(() => this.resize());
             });
-        });
+        }, 350);
 
+        // Re-measure on resize with debounce
+        let resizeTimer;
         window.addEventListener('resize', () => {
-            setTimeout(() => this.resize(), 100);
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => this.resize(), 150);
         });
 
+        // Also re-measure after orientation change settles
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => this.resize(), 400);
+        });
+
+        // Mouse
         this.container.addEventListener('mouseenter', () => { this.targetStrength = 1; });
         this.container.addEventListener('mousemove', (e) => {
-            const rect = this.container.getBoundingClientRect();
-            this.mouseX = e.clientX - rect.left;
-            this.mouseY = e.clientY - rect.top;
+            const r      = this.container.getBoundingClientRect();
+            this.mouseX  = e.clientX - r.left;
+            this.mouseY  = e.clientY - r.top;
         });
         this.container.addEventListener('mouseleave', () => {
             this.targetStrength = 0;
-            this.mouseX = -9999;
-            this.mouseY = -9999;
+            this.mouseX = this.mouseY = -9999;
         });
 
-        // Touch support for mobile reveal
+        // Touch
         this.container.addEventListener('touchstart', (e) => {
             this.targetStrength = 1;
-            const touch = e.touches[0];
-            const rect = this.container.getBoundingClientRect();
-            this.mouseX = touch.clientX - rect.left;
-            this.mouseY = touch.clientY - rect.top;
+            const t = e.touches[0];
+            const r = this.container.getBoundingClientRect();
+            this.mouseX = t.clientX - r.left;
+            this.mouseY = t.clientY - r.top;
         }, { passive: true });
 
         this.container.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            const rect = this.container.getBoundingClientRect();
-            this.mouseX = touch.clientX - rect.left;
-            this.mouseY = touch.clientY - rect.top;
+            const t = e.touches[0];
+            const r = this.container.getBoundingClientRect();
+            this.mouseX = t.clientX - r.left;
+            this.mouseY = t.clientY - r.top;
         }, { passive: true });
 
         this.container.addEventListener('touchend', () => {
             this.targetStrength = 0;
-            this.mouseX = -9999;
-            this.mouseY = -9999;
+            this.mouseX = this.mouseY = -9999;
         });
 
         this.update();
     }
 
     resize() {
-        // Use getBoundingClientRect for true rendered size
-        const rect = this.container.getBoundingClientRect();
-        const w = Math.round(rect.width);
-        const h = Math.round(rect.height);
+        const r = this.container.getBoundingClientRect();
+        const w = Math.round(r.width);
+        const h = Math.round(r.height);
         if (w > 0 && h > 0) {
-            this.canvas.width = w;
-            this.canvas.height = h;
-            // Also set canvas CSS size to match
-            this.canvas.style.width = w + 'px';
+            this.canvas.width        = w;
+            this.canvas.height       = h;
+            this.canvas.style.width  = w + 'px';
             this.canvas.style.height = h + 'px';
         }
     }
@@ -153,41 +156,42 @@ class PortraitReveal {
     }
 
     drawDistorted() {
-        const w = this.canvas.width;
-        const h = this.canvas.height;
+        const w        = this.canvas.width;
+        const h        = this.canvas.height;
         const strength = this.revealStrength;
 
-        const offscreen = document.createElement('canvas');
-        offscreen.width = w;
-        offscreen.height = h;
-        const off = offscreen.getContext('2d');
-        off.drawImage(this.overlayImg, 0, 0, w, h);
-        const pixels = off.getImageData(0, 0, w, h).data;
+        // Draw overlay to offscreen canvas at correct size
+        const off    = Object.assign(document.createElement('canvas'), { width: w, height: h });
+        const offCtx = off.getContext('2d');
+        offCtx.drawImage(this.overlayImg, 0, 0, w, h);
+        const pixels = offCtx.getImageData(0, 0, w, h).data;
 
         const output = this.ctx.createImageData(w, h);
-        const out = output.data;
+        const out    = output.data;
+
         const influenceRadius = Math.min(w, h) * 0.45 * strength;
-        const maxDisplace = 4 * strength;
+        const maxDisplace     = 4 * strength;
 
         for (let y = 0; y < h; y++) {
             for (let x = 0; x < w; x++) {
-                const dx = x - this.mouseX;
-                const dy = y - this.mouseY;
+                const dx   = x - this.mouseX;
+                const dy   = y - this.mouseY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist > influenceRadius) continue;
+
                 const falloff = (1 + Math.cos(Math.PI * dist / influenceRadius)) / 2;
-                const wave = Math.sin(dist * 0.08 - this.time * 2) * falloff * 0.8;
-                const dispX = Math.round(wave * maxDisplace);
-                const dispY = Math.round(Math.cos(dist * 0.07 - this.time * 1.8) * maxDisplace * falloff * 0.1);
-                const srcX = Math.min(w - 1, Math.max(0, x + dispX));
-                const srcY = Math.min(h - 1, Math.max(0, y + dispY));
-                const si = (srcY * w + srcX) * 4;
-                const di = (y * w + x) * 4;
-                const alpha = falloff * strength;
+                const wave    = Math.sin(dist * 0.08 - this.time * 2) * falloff * 0.8;
+                const dispX   = Math.round(wave * maxDisplace);
+                const dispY   = Math.round(Math.cos(dist * 0.07 - this.time * 1.8) * maxDisplace * falloff * 0.1);
+                const srcX    = Math.min(w - 1, Math.max(0, x + dispX));
+                const srcY    = Math.min(h - 1, Math.max(0, y + dispY));
+                const si      = (srcY * w + srcX) * 4;
+                const di      = (y * w + x) * 4;
+
                 out[di]   = pixels[si];
                 out[di+1] = pixels[si+1];
                 out[di+2] = pixels[si+2];
-                out[di+3] = Math.round(pixels[si+3] * alpha);
+                out[di+3] = Math.round(pixels[si+3] * falloff * strength);
             }
         }
         this.ctx.putImageData(output, 0, 0);
@@ -195,19 +199,19 @@ class PortraitReveal {
 }
 
 /* ========================================
-   GSAP Entrance Animations — Page 1
+   Entrance Animations
    ======================================== */
 function initEntranceAnimations() {
-    const starsCanvas = document.getElementById('stars-canvas');
+    const starsCanvas  = document.getElementById('stars-canvas');
     const portraitBase = document.querySelector('.portrait-base');
-    const heroName = document.querySelector('.hero-name');
-    const heroTitle = document.querySelector('.hero-title');
+    const heroName     = document.querySelector('.hero-name');
+    const heroTitle    = document.querySelector('.hero-title');
 
     const tl = gsap.timeline();
-    tl.to(starsCanvas, { opacity: 1, duration: 0.8, ease: 'power2.inOut' }, 0);
-    tl.to(portraitBase, { opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', duration: 1.2, ease: 'power3.out' }, 0);
-    tl.to(heroName, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 0.4);
-    tl.to(heroTitle, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.6);
+    tl.to(starsCanvas,  { opacity: 1, duration: 0.8, ease: 'power2.inOut' }, 0);
+    tl.to(portraitBase, { opacity: 1, clipPath: 'polygon(0 0,100% 0,100% 100%,0 100%)', duration: 1.2, ease: 'power3.out' }, 0);
+    tl.to(heroName,     { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' }, 0.4);
+    tl.to(heroTitle,    { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.6);
     tl.call(() => {
         window._navbar.show();
         initScrollAnimations();
@@ -215,20 +219,20 @@ function initEntranceAnimations() {
 }
 
 /* ========================================
-   All Scroll Animations
+   Scroll Animations
    ======================================== */
 function initScrollAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    /* Page 2 */
+    // Page 2
     gsap.to('.about-divider', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.about-divider', start: 'top 85%' } });
-    gsap.to('.about-bio', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.about-bio', start: 'top 80%' } });
-    gsap.to('.about-stats', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.about-stats', start: 'top 80%' } });
-    gsap.to('.about-skills', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.about-skills', start: 'top 85%' } });
-    gsap.to('.skill-tag', { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.07, scrollTrigger: { trigger: '.skills-list', start: 'top 85%' } });
+    gsap.to('.about-bio',     { opacity: 1, y: 0, duration: 1,   ease: 'power3.out', scrollTrigger: { trigger: '.about-bio',     start: 'top 80%' } });
+    gsap.to('.about-stats',   { opacity: 1, y: 0, duration: 1,   ease: 'power3.out', scrollTrigger: { trigger: '.about-stats',   start: 'top 80%' } });
+    gsap.to('.about-skills',  { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.about-skills',  start: 'top 85%' } });
+    gsap.to('.skill-tag',     { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.07, scrollTrigger: { trigger: '.skills-list', start: 'top 85%' } });
 
-    /* Page 3 — horizontal only on non-portrait */
-    const track = document.getElementById('work-track');
+    // Page 3 — horizontal on desktop/landscape, vertical on portrait
+    const track       = document.getElementById('work-track');
     const workSection = document.querySelector('.work');
 
     if (track && workSection) {
@@ -240,23 +244,23 @@ function initScrollAnimations() {
                 ease: 'none',
                 scrollTrigger: {
                     trigger: workSection,
-                    start: 'top top',
-                    end: () => `+=${totalScroll}`,
-                    pin: '.work-sticky',
-                    scrub: 1,
+                    start:   'top top',
+                    end:     () => `+=${totalScroll}`,
+                    pin:     '.work-sticky',
+                    scrub:   1,
                     invalidateOnRefresh: true,
                 }
             });
         } else {
             workSection.style.height = 'auto';
-            track.style.transform = 'none';
+            track.style.transform    = 'none';
         }
     }
 
-    /* Page 4 */
+    // Page 4
     gsap.to('.contact-divider', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.contact-divider', start: 'top 85%' } });
-    gsap.to('.contact-main', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.contact-main', start: 'top 80%' } });
-    gsap.to('.contact-footer', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.contact-footer', start: 'top 90%' } });
+    gsap.to('.contact-main',    { opacity: 1, y: 0, duration: 1,   ease: 'power3.out', scrollTrigger: { trigger: '.contact-main',    start: 'top 80%' } });
+    gsap.to('.contact-footer',  { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.contact-footer',  start: 'top 90%' } });
     gsap.fromTo('.t-link',
         { opacity: 0, x: -16 },
         { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out',
@@ -265,14 +269,14 @@ function initScrollAnimations() {
 }
 
 /* ========================================
-   Lenis Smooth Scroll
+   Lenis
    ======================================== */
 function initLenisScroll() {
     if (typeof Lenis === 'undefined') { console.warn('Lenis not loaded'); return; }
     const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
+        duration:    1.2,
+        easing:      (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth:      true,
         smoothTouch: false,
     });
     lenis.on('scroll', ScrollTrigger.update);
@@ -281,7 +285,7 @@ function initLenisScroll() {
 }
 
 /* ========================================
-   Initialize
+   Init
    ======================================== */
 document.addEventListener('DOMContentLoaded', () => {
     window._navbar = new Navbar();
