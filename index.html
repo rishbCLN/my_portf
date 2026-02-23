@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RISHB_CLN - Frontend Developer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="gooey">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" seed="1" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">RISHB_CLN</div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <a href="#page-1" class="nav-link" data-index="01">Hero</a>
+            <a href="#page-2" class="nav-link" data-index="02">About</a>
+            <a href="#page-3" class="nav-link" data-index="03">Work</a>
+            <a href="#page-4" class="nav-link" data-index="04">Contact</a>
+        </div>
+    </nav>
+
+    <!-- PAGE 1: HERO -->
+    <section class="hero page" id="page-1">
+        <div class="hero-container">
+            <div class="hero-left">
+                <h1 class="hero-name">RISHB_CLN</h1>
+            </div>
+            <div class="hero-right">
+                <div class="portrait-container">
+                    <img src="prim_potrait.png" alt="Portrait" class="portrait-base" />
+                    <img src="sec_col_potrait.png" alt="Helmet Portrait" class="portrait-overlay" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 2: ABOUT -->
+    <section class="about page" id="page-2">
+        <div class="about-container">
+            <div class="about-divider">
+                <span class="divider-line"></span>
+                <span class="divider-label">001 / ABOUT</span>
+                <span class="divider-line"></span>
+            </div>
+            <div class="about-bio">
+                <p class="about-bio-text">
+                    I build things for the web that feel<br>
+                    <em class="accent">alive</em> — fast, sharp, and hard to forget.
+                </p>
+                <p class="about-bio-sub">
+                    Based in India. Obsessed with motion, interaction, and the space between design and code.
+                </p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-item">
+                    <span class="stat-number accent">02+</span>
+                    <span class="stat-label">Years Building</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number accent">15+</span>
+                    <span class="stat-label">Projects Shipped</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number accent">∞</span>
+                    <span class="stat-label">Things to Learn</span>
+                </div>
+            </div>
+            <div class="about-skills">
+                <p class="skills-heading">TOOLS & STACK</p>
+                <div class="skills-list">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">GSAP</span>
+                    <span class="skill-tag">Three.js</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Canvas API</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3: WORK — horizontal scroll -->
+    <section class="work page" id="page-3">
+        <div class="work-sticky">
+            <div class="work-header">
+                <span class="work-label">002 / WORK</span>
+                <span class="work-scroll-hint">scroll to explore →</span>
+            </div>
+            <div class="work-track" id="work-track">
+
+                <div class="project-card" data-num="001">
+                    <div class="project-scan"></div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);"></div>
+                    <div class="project-content">
+                        <span class="project-num">001</span>
+                        <h2 class="project-title">PROJECT NAME</h2>
+                        <p class="project-desc">A short punchy description of what this project does and why it matters.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">GSAP</span>
+                            <span class="project-tag">Node.js</span>
+                        </div>
+                        <a href="#" class="project-link">VIEW <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-num="002">
+                    <div class="project-scan"></div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #050a05 0%, #0f1a0f 100%);"></div>
+                    <div class="project-content">
+                        <span class="project-num">002</span>
+                        <h2 class="project-title">PROJECT NAME</h2>
+                        <p class="project-desc">A short punchy description of what this project does and why it matters.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Three.js</span>
+                            <span class="project-tag">WebGL</span>
+                            <span class="project-tag">Canvas</span>
+                        </div>
+                        <a href="#" class="project-link">VIEW <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-num="003">
+                    <div class="project-scan"></div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #080808 0%, #181818 100%);"></div>
+                    <div class="project-content">
+                        <span class="project-num">003</span>
+                        <h2 class="project-title">PROJECT NAME</h2>
+                        <p class="project-desc">A short punchy description of what this project does and why it matters.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Figma</span>
+                        </div>
+                        <a href="#" class="project-link">VIEW <span>→</span></a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-num="004">
+                    <div class="project-scan"></div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #060a06 0%, #111811 100%);"></div>
+                    <div class="project-content">
+                        <span class="project-num">004</span>
+                        <h2 class="project-title">PROJECT NAME</h2>
+                        <p class="project-desc">A short punchy description of what this project does and why it matters.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">API</span>
+                            <span class="project-tag">Lenis</span>
+                        </div>
+                        <a href="#" class="project-link">VIEW <span>→</span></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 4: CONTACT — terminal style -->
+    <section class="contact page" id="page-4">
+        <div class="contact-container">
+
+            <div class="contact-divider">
+                <span class="divider-line"></span>
+                <span class="divider-label">003 / CONTACT</span>
+                <span class="divider-line"></span>
+            </div>
+
+            <div class="contact-main">
+                <div class="contact-left">
+                    <h2 class="contact-heading">
+                        Let's build<br>something<br><em class="accent">worth seeing.</em>
+                    </h2>
+                    <p class="contact-sub">Open to freelance, collab, and full-time opportunities.</p>
+                </div>
+
+                <div class="contact-right">
+                    <!-- Terminal style contact block -->
+                    <div class="terminal">
+                        <div class="terminal-bar">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                            <span class="terminal-title">contact.sh</span>
+                        </div>
+                        <div class="terminal-body">
+                            <p class="terminal-line"><span class="t-prompt">~</span> <span class="t-cmd">cat links.txt</span></p>
+                            <div class="terminal-links">
+                                <a href="mailto:your@email.com" class="t-link">
+                                    <span class="t-key">EMAIL</span>
+                                    <span class="t-val">your@email.com</span>
+                                    <span class="t-arrow">↗</span>
+                                </a>
+                                <a href="#" class="t-link">
+                                    <span class="t-key">GITHUB</span>
+                                    <span class="t-val">github.com/rishbcln</span>
+                                    <span class="t-arrow">↗</span>
+                                </a>
+                                <a href="#" class="t-link">
+                                    <span class="t-key">LINKEDIN</span>
+                                    <span class="t-val">linkedin.com/in/rishbcln</span>
+                                    <span class="t-arrow">↗</span>
+                                </a>
+                                <a href="#" class="t-link">
+                                    <span class="t-key">TWITTER</span>
+                                    <span class="t-val">@rishbcln</span>
+                                    <span class="t-arrow">↗</span>
+                                </a>
+                            </div>
+                            <p class="terminal-line cursor-blink"><span class="t-prompt">~</span> <span class="t-cursor">█</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-footer">
+                <span class="footer-copy">© 2025 RISHB_CLN</span>
+                <span class="footer-made">DESIGNED & BUILT BY RISHABH</span>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
+    <script src="main.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
