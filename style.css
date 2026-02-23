@@ -1,4 +1,6 @@
-
+/* ========================================
+   Font Face
+   ======================================== */
 @font-face {
     font-family: 'Space Grotesk';
     src: url('SpaceGrotesk-Bold.ttf') format('truetype');
@@ -30,7 +32,9 @@ html, body {
 
 .page { width: 100vw; min-height: 100vh; }
 
-
+/* ========================================
+   Stars Canvas
+   ======================================== */
 #stars-canvas {
     position: fixed;
     top: 0; left: 0;
@@ -40,7 +44,9 @@ html, body {
     pointer-events: none;
 }
 
-
+/* ========================================
+   NAVBAR
+   ======================================== */
 .navbar {
     position: fixed;
     top: 20px;
@@ -120,7 +126,9 @@ html, body {
 .nav-toggle.open .bar-2 { opacity: 0; width: 0; }
 .nav-toggle.open .bar-3 { transform: translateY(-6.5px) rotate(-45deg); }
 
-
+/* ========================================
+   PAGE 1 — HERO
+   ======================================== */
 .hero {
     position: relative;
     z-index: 10;
@@ -204,7 +212,9 @@ html, body {
     pointer-events: none;
 }
 
-
+/* ========================================
+   PAGE 2 — ABOUT
+   ======================================== */
 .about {
     position: relative;
     z-index: 10;
@@ -293,11 +303,10 @@ html, body {
 }
 .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
 
-
-.work {
-    position: relative;
-    z-index: 10;
-}
+/* ========================================
+   PAGE 3 — WORK (horizontal scroll)
+   ======================================== */
+.work { position: relative; z-index: 10; }
 .work-sticky {
     position: sticky;
     top: 0;
@@ -353,18 +362,14 @@ html, body {
 .project-card:hover .project-bg { transform: scale(1.03); }
 .project-scan {
     position: absolute;
-    top: -4px;
-    left: 0;
-    width: 100%;
-    height: 3px;
+    top: -4px; left: 0;
+    width: 100%; height: 3px;
     background: var(--accent);
     opacity: 0;
     z-index: 3;
     box-shadow: 0 0 12px var(--accent), 0 0 30px rgba(124,252,0,0.4);
 }
-.project-card:hover .project-scan {
-    animation: scan 1.2s ease-in-out;
-}
+.project-card:hover .project-scan { animation: scan 1.2s ease-in-out; }
 @keyframes scan {
     0%   { top: -4px; opacity: 0; }
     10%  { opacity: 1; }
@@ -427,7 +432,9 @@ html, body {
 .project-link span { transition: transform 0.3s ease; }
 .project-link:hover span { transform: translateX(4px); }
 
-
+/* ========================================
+   PAGE 4 — CONTACT
+   ======================================== */
 .contact {
     position: relative;
     z-index: 10;
@@ -552,10 +559,12 @@ html, body {
     color: var(--muted);
 }
 
-
+/* ========================================
+   PORTRAIT MOBILE ONLY
+   ======================================== */
 @media (max-width: 768px) and (orientation: portrait) {
 
-    
+    /* Navbar */
     .navbar {
         top: 12px;
         border-radius: 20px;
@@ -593,133 +602,102 @@ html, body {
     }
     .nav-link:last-child { border-bottom: none; }
 
-   
-    .hero-container {
-        flex-direction: column-reverse;
-        padding: 100px 24px 40px;
-        gap: 32px;
-        justify-content: center;
-        align-items: center;
-    }
-    .hero-left {
-        flex: unset;
-        width: 100%;
-        align-items: flex-start;
-    }
-    .hero-right {
-        flex: unset;
-        width: 100%;
-        justify-content: center;
-        padding: 0;
-    }
-    .hero-name {
-        font-size: 13vw;
-        margin-bottom: 12px;
-    }
-    .hero-title {
-        font-size: 0.7rem;
-        letter-spacing: 0.3em;
-    }
-    .portrait-container {
-        max-width: 240px;
-        aspect-ratio: 3/4;
-    }
-
-   
+    /* Hero — name at top, photo flush to bottom */
     .hero {
         background-attachment: scroll;
+        min-height: 100vh;
+        align-items: flex-start;
     }
 
-    
-    .about {
-        padding: 80px 0;
-    }
-    .about-container {
-        padding: 0 24px;
-        gap: 56px;
-    }
-    .about-bio-text {
-        font-size: clamp(1.6rem, 7vw, 2.4rem);
-    }
-    .about-bio-sub {
-        font-size: 0.9rem;
-    }
-    .about-stats {
-        flex-direction: row;
+    .hero-container {
+        flex-direction: column;
+        padding: 0;
         gap: 0;
+        align-items: flex-start;
         justify-content: space-between;
-    }
-    .stat-number {
-        font-size: clamp(1.8rem, 8vw, 2.8rem);
-    }
-    .stat-label {
-        font-size: 0.6rem;
-        letter-spacing: 0.15em;
-    }
-    .skills-list { gap: 8px; }
-    .skill-tag {
-        padding: 6px 14px;
-        font-size: 0.75rem;
+        height: 100vh;
+        max-width: 100%;
     }
 
-    
-    .work-sticky {
-        position: relative;
-        height: auto;
-        overflow: visible;
+    /* Name sits at top with padding */
+    .hero-left {
+        flex: 0 0 auto;
+        width: 100%;
+        padding: 100px 24px 24px;
     }
+
+    .hero-name {
+        font-size: 14vw;
+        margin-bottom: 10px;
+    }
+
+    .hero-title {
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+    }
+
+    /* Photo fills bottom, flush to page 2 */
+    .hero-right {
+        flex: 1;
+        width: 100%;
+        padding: 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .portrait-container {
+        width: 100%;
+        max-width: 100%;
+        /* fill remaining space but cap height */
+        height: 100%;
+        max-height: 65vh;
+        aspect-ratio: unset;
+        border-radius: 0;
+    }
+
+    .portrait-base {
+        object-position: top center;
+    }
+
+    /* About */
+    .about { padding: 60px 0 80px; }
+    .about-container { padding: 0 24px; gap: 48px; }
+    .about-bio-text { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+    .about-bio-sub { font-size: 0.9rem; }
+    .about-stats { flex-direction: row; gap: 0; justify-content: space-between; }
+    .stat-number { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+    .stat-label { font-size: 0.6rem; letter-spacing: 0.15em; }
+    .skills-list { gap: 8px; }
+    .skill-tag { padding: 6px 14px; font-size: 0.75rem; }
+
+    /* Work — vertical on portrait */
+    .work-sticky { position: relative; height: auto; overflow: visible; }
     .work-track {
         flex-direction: column;
         height: auto;
-        transform: none !important; 
+        transform: none !important;
     }
     .project-card {
         min-width: 100%;
         width: 100%;
-        height: 70vw;
+        height: 72vw;
         min-height: 280px;
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
-    .project-content {
-        padding: 24px;
-    }
-    .project-title {
-        font-size: 1.4rem;
-    }
-    .project-desc {
-        font-size: 0.8rem;
-        max-width: 100%;
-    }
-    .work-header {
-        padding: 24px;
-    }
+    .project-content { padding: 24px; }
+    .project-title { font-size: 1.4rem; }
+    .project-desc { font-size: 0.8rem; max-width: 100%; }
+    .work-header { padding: 24px; }
     .work-scroll-hint { display: none; }
 
-  
-    .contact {
-        padding: 80px 0 60px;
-    }
-    .contact-container {
-        padding: 0 24px;
-        gap: 56px;
-    }
-    .contact-main {
-        flex-direction: column;
-        gap: 40px;
-    }
-    .contact-heading {
-        font-size: clamp(1.8rem, 8vw, 2.8rem);
-    }
-    .t-val {
-        font-size: 0.7rem;
-    }
-    .contact-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    .footer-copy, .footer-made {
-        font-size: 0.6rem;
-    }
+    /* Contact */
+    .contact { padding: 60px 0 50px; }
+    .contact-container { padding: 0 24px; gap: 48px; }
+    .contact-main { flex-direction: column; gap: 32px; }
+    .contact-heading { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+    .t-val { font-size: 0.7rem; }
+    .contact-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .footer-copy, .footer-made { font-size: 0.6rem; }
 }
