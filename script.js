@@ -237,9 +237,7 @@ function initLenisScroll() {
     gsap.ticker.lagSmoothing(0);
 }
 
-/* ========================================
-   Initialize
-   ======================================== */
+
 document.addEventListener('DOMContentLoaded', () => {
     window._navbar = new Navbar();
     new PortraitReveal();
