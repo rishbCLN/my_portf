@@ -127,7 +127,7 @@ html, body {
     margin-bottom: 24px; opacity: 0; transform: translateY(40px);
 }
 .hero-title {
-    font-size: 1.1rem; font-weight: 500; letter-spacing: 0.4em;
+    font-size: 1.3rem; font-weight: 500; letter-spacing: 0.4em;
     opacity: 0; transform: translateY(20px);
 }
 .hero-right {
