@@ -264,9 +264,6 @@ function initScrollAnimations() {
     );
 }
 
-/* ========================================
-   Lenis Smooth Scroll
-   ======================================== */
 function initLenisScroll() {
     if (typeof Lenis === 'undefined') { console.warn('Lenis not loaded'); return; }
     const lenis = new Lenis({
