@@ -30,7 +30,7 @@ html, body {
     overflow-x: hidden;
 }
 
-.page { width: 100vw; min-height: 100dvh; }
+.page { width: 100vw; min-height: 100vh; }
 
 /* ========================================
    Stars Canvas
@@ -38,7 +38,7 @@ html, body {
 #stars-canvas {
     position: fixed;
     top: 0; left: 0;
-    width: 100vw; height: 100dvh;
+    width: 100vw; height: 100vh;
     z-index: 0;
     opacity: 0;
     pointer-events: none;
@@ -310,7 +310,7 @@ html, body {
 .work-sticky {
     position: sticky;
     top: 0;
-    height: 100dvh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -339,7 +339,7 @@ html, body {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    height: calc(100dvh - 73px);
+    height: calc(100vh - 73px);
     will-change: transform;
 }
 .project-card {
@@ -605,7 +605,7 @@ html, body {
     /* Hero — name at top, photo flush to bottom */
     .hero {
         background-attachment: scroll;
-        min-height: 100dvh;
+        min-height: 100vh;
         align-items: flex-start;
     }
 
@@ -615,7 +615,7 @@ html, body {
         gap: 0;
         align-items: flex-start;
         justify-content: space-between;
-        height: 100dvh;
+        height: 100vh;
         max-width: 100%;
     }
 
@@ -651,7 +651,7 @@ html, body {
         max-width: 100%;
         /* fill remaining space but cap height */
         height: 100%;
-        max-height: 65dvh;
+        max-height: 65vh;
         aspect-ratio: unset;
         border-radius: 0;
     }
