@@ -1,6 +1,4 @@
-/* ========================================
-   Navbar
-   ======================================== */
+
 class Navbar {
     constructor() {
         this.navbar = document.getElementById('navbar');
@@ -46,16 +44,12 @@ class Navbar {
     }
 }
 
-/* ========================================
-   Helper — is portrait mobile?
-   ======================================== */
+
 function isPortraitMobile() {
     return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 }
 
-/* ========================================
-   Smooth Glitchy Distortion Reveal
-   ======================================== */
+
 class PortraitReveal {
     constructor() {
         this.container = document.querySelector('.portrait-container');
@@ -148,9 +142,7 @@ class PortraitReveal {
     }
 }
 
-/* ========================================
-   GSAP Entrance Animations — Page 1
-   ======================================== */
+
 function initEntranceAnimations() {
     const starsCanvas = document.getElementById('stars-canvas');
     const portraitBase = document.querySelector('.portrait-base');
@@ -168,26 +160,24 @@ function initEntranceAnimations() {
     }, [], 1.0);
 }
 
-/* ========================================
-   All Scroll Animations
-   ======================================== */
+
+
 function initScrollAnimations() {
     gsap.registerPlugin(ScrollTrigger);
 
-    /* Page 2 */
     gsap.to('.about-divider', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.about-divider', start: 'top 85%' } });
     gsap.to('.about-bio', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.about-bio', start: 'top 80%' } });
     gsap.to('.about-stats', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.about-stats', start: 'top 80%' } });
     gsap.to('.about-skills', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.about-skills', start: 'top 85%' } });
     gsap.to('.skill-tag', { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.07, scrollTrigger: { trigger: '.skills-list', start: 'top 85%' } });
 
-    /* Page 3 — horizontal scroll ONLY on non-portrait */
+    
     const track = document.getElementById('work-track');
     const workSection = document.querySelector('.work');
 
     if (track && workSection) {
         if (!isPortraitMobile()) {
-            // Desktop / landscape: horizontal scroll
+            
             const totalScroll = track.scrollWidth - window.innerWidth;
             workSection.style.height = `${totalScroll + window.innerHeight}px`;
 
@@ -204,13 +194,13 @@ function initScrollAnimations() {
                 }
             });
         } else {
-            // Portrait mobile: vertical, no pinning, no transform
+            
             workSection.style.height = 'auto';
             track.style.transform = 'none';
         }
     }
 
-    /* Page 4 */
+  
     gsap.to('.contact-divider', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.contact-divider', start: 'top 85%' } });
     gsap.to('.contact-main', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.contact-main', start: 'top 80%' } });
     gsap.to('.contact-footer', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.contact-footer', start: 'top 90%' } });
@@ -221,9 +211,7 @@ function initScrollAnimations() {
     );
 }
 
-/* ========================================
-   Lenis Smooth Scroll
-   ======================================== */
+
 function initLenisScroll() {
     if (typeof Lenis === 'undefined') { console.warn('Lenis not loaded'); return; }
     const lenis = new Lenis({
