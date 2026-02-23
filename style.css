@@ -173,7 +173,6 @@ html, body {
     font-size: 1rem;
     font-weight: 500;
     letter-spacing: 0.4em;
-    color: var(--muted);
     opacity: 0;
     transform: translateY(20px);
 }
