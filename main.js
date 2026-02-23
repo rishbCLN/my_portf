@@ -1,6 +1,4 @@
-/* ========================================
-   Hyperspace Intro Animation - Fixed
-   ======================================== */
+
 class HyperspaceIntro {
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -18,15 +16,15 @@ class HyperspaceIntro {
         this.resizeCanvas();
         window.addEventListener('resize', () => this.resizeCanvas());
 
-        // No static phase — animation starts immediately
-        this.phase2End = 1200;     // Slow drift
-        this.phase3End = 5500;     // Acceleration into hyperspace
-        this.flashEnd = 5580;      // White flash
-        this.fadeEnd = 6300;       // Fade out
+        
+        this.phase2End = 1200;     
+        this.phase3End = 5500;    
+        this.flashEnd = 5580;      
+        this.fadeEnd = 6300;     
 
         this.centerX = this.canvas.width / 2;
         this.centerY = this.canvas.height / 2;
-        this.portalMaxRadius = 130;  // starts at this size
+        this.portalMaxRadius = 130;  
         this.stars = [];
         this.startTime = performance.now();
         this.maxScreenDist = Math.sqrt(this.canvas.width ** 2 + this.canvas.height ** 2) / 2;
@@ -94,7 +92,6 @@ class HyperspaceIntro {
         this.ctx.fillStyle = '#000';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Phase 2: Slow Drift — starts immediately
         if (elapsed < this.phase2End) {
             const progress = elapsed / this.phase2End;
             const eased = progress < 0.5
@@ -116,19 +113,19 @@ class HyperspaceIntro {
             }
             this.ctx.globalAlpha = 1;
 
-            // Portal starts full size during drift
+          
             this.drawPortal(this.portalMaxRadius);
 
-        // Phase 3: Hyperspace acceleration — portal shrinks as we speed in
+    
         } else if (elapsed < this.phase3End) {
             const progress = (elapsed - this.phase2End) / (this.phase3End - this.phase2End);
             this.updateAndDrawWarpStars(progress);
 
-            // Portal shrinks from full size to 0 as progress goes 0 -> 1
+            
             const portalRadius = this.portalMaxRadius * (1 - progress);
             this.drawPortal(portalRadius);
 
-        // Phase 4 & 5: Flash + Fade — no portal
+       
         } else if (elapsed < this.fadeEnd) {
             this.updateAndDrawWarpStars(1);
 
@@ -163,7 +160,7 @@ class HyperspaceIntro {
         const accelerationCurve = Math.pow(progress, 4);
 
         for (let star of this.stars) {
-            // FIX: minimum base speed of 0.3 so stars are never invisible at phase transition
+          
             const baseSpeed = 0.3 + accelerationCurve * 45;
             const distanceFactor = Math.max(0.3, Math.min(1.6, this.maxScreenDist / Math.max(star.distFromCenter, 50)));
             star.speed = baseSpeed * distanceFactor;
@@ -177,7 +174,7 @@ class HyperspaceIntro {
             const dy = star.y - this.centerY;
             const distFromCenter = Math.sqrt(dx * dx + dy * dy);
 
-            // Skip stars inside the shrinking portal radius
+          
             const currentPortalRadius = this.portalMaxRadius * (1 - progress);
             if (distFromCenter < currentPortalRadius) continue;
             if (distFromCenter > this.maxScreenDist * 2) continue;

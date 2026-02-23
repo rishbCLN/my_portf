@@ -1,6 +1,4 @@
-/* ========================================
-   Font Face
-   ======================================== */
+
 @font-face {
     font-family: 'Space Grotesk';
     src: url('SpaceGrotesk-Bold.ttf') format('truetype');
@@ -32,9 +30,7 @@ html, body {
 
 .page { width: 100vw; min-height: 100vh; }
 
-/* ========================================
-   Stars Canvas
-   ======================================== */
+
 #stars-canvas {
     position: fixed;
     top: 0; left: 0;
@@ -44,9 +40,7 @@ html, body {
     pointer-events: none;
 }
 
-/* ========================================
-   NAVBAR
-   ======================================== */
+
 .navbar {
     position: fixed;
     top: 20px;
@@ -126,9 +120,7 @@ html, body {
 .nav-toggle.open .bar-2 { opacity: 0; width: 0; }
 .nav-toggle.open .bar-3 { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* ========================================
-   PAGE 1 — HERO
-   ======================================== */
+
 .hero {
     position: relative;
     z-index: 10;
@@ -212,9 +204,7 @@ html, body {
     pointer-events: none;
 }
 
-/* ========================================
-   PAGE 2 — ABOUT
-   ======================================== */
+
 .about {
     position: relative;
     z-index: 10;
@@ -303,9 +293,7 @@ html, body {
 }
 .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ========================================
-   PAGE 3 — WORK (horizontal scroll)
-   ======================================== */
+
 .work {
     position: relative;
     z-index: 10;
@@ -439,9 +427,7 @@ html, body {
 .project-link span { transition: transform 0.3s ease; }
 .project-link:hover span { transform: translateX(4px); }
 
-/* ========================================
-   PAGE 4 — CONTACT
-   ======================================== */
+
 .contact {
     position: relative;
     z-index: 10;
@@ -566,13 +552,10 @@ html, body {
     color: var(--muted);
 }
 
-/* ========================================
-   PORTRAIT MOBILE ONLY
-   Does NOT affect landscape or desktop
-   ======================================== */
+
 @media (max-width: 768px) and (orientation: portrait) {
 
-    /* Navbar — full width pill on portrait */
+    
     .navbar {
         top: 12px;
         border-radius: 20px;
@@ -610,7 +593,7 @@ html, body {
     }
     .nav-link:last-child { border-bottom: none; }
 
-    /* Hero — stacked vertically, photo on top */
+   
     .hero-container {
         flex-direction: column-reverse;
         padding: 100px 24px 40px;
@@ -642,12 +625,12 @@ html, body {
         aspect-ratio: 3/4;
     }
 
-    /* Fix background-attachment: fixed — broken on iOS */
+   
     .hero {
         background-attachment: scroll;
     }
 
-    /* About — tighter spacing */
+    
     .about {
         padding: 80px 0;
     }
@@ -679,7 +662,7 @@ html, body {
         font-size: 0.75rem;
     }
 
-    /* Work — vertical scroll instead of horizontal on portrait */
+    
     .work-sticky {
         position: relative;
         height: auto;
@@ -688,7 +671,7 @@ html, body {
     .work-track {
         flex-direction: column;
         height: auto;
-        transform: none !important; /* override GSAP horizontal translate */
+        transform: none !important; 
     }
     .project-card {
         min-width: 100%;
@@ -713,7 +696,7 @@ html, body {
     }
     .work-scroll-hint { display: none; }
 
-    /* Contact — stacked */
+  
     .contact {
         padding: 80px 0 60px;
     }
