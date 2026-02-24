@@ -2,7 +2,7 @@
 
 Live site → https://rshb-portf-omega.vercel.app
 
-<video src="gif_portf.mp4" autoplay loop muted playsinline width="100%"></video>
+[<video src="gif_portf.mp4" autoplay loop muted playsinline width="100%"></video>](https://github.com/user-attachments/assets/77f8ad3a-d652-43c0-b99e-0dcd2f5ec4a9)
 
 Built with HTML · CSS · JavaScript · GSAP · Three.js · Lenis
 
