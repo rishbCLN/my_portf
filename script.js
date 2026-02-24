@@ -278,10 +278,72 @@ function initLenisScroll() {
 }
 
 /* ========================================
+   Hero Name Accent Typing Animation (slower, thinner cursor)
+   ======================================== */
+class HeroAccentTyping {
+    constructor() {
+        this.accent = document.querySelector('.hero-name .accent');
+        if (!this.accent) return;
+        this.base = '_';
+        this.states = [
+            { type: 'backspace', from: 'CLN', to: '', delay: 180 },
+            { type: 'pause', text: '', delay: 600 },
+            { type: 'type', from: '', to: ':)', delay: 180 },
+            { type: 'pause', text: ':)', delay: 600 },
+            { type: 'backspace', from: ':)', to: '', delay: 180 },
+            { type: 'pause', text: '', delay: 600 },
+            { type: 'type', from: '', to: 'CLN', delay: 180 },
+            { type: 'pause', text: 'CLN', delay: 1200 },
+        ];
+        this.stateIndex = 0;
+        this.typed = '';
+        this.cursorVisible = true;
+        this.start();
+    }
+    start() {
+        this.animate();
+        this.cursorBlink();
+    }
+    animate() {
+        const state = this.states[this.stateIndex];
+        if (state.type === 'backspace') {
+            if (this.typed.length > 0) {
+                this.typed = this.typed.slice(0, -1);
+                this.update();
+                setTimeout(() => this.animate(), state.delay);
+                return;
+            }
+        } else if (state.type === 'type') {
+            if (this.typed.length < state.to.length) {
+                this.typed += state.to[this.typed.length];
+                this.update();
+                setTimeout(() => this.animate(), state.delay);
+                return;
+            }
+        } else if (state.type === 'pause') {
+            this.typed = state.text;
+            this.update();
+        }
+        this.stateIndex = (this.stateIndex + 1) % this.states.length;
+        setTimeout(() => this.animate(), state.delay);
+    }
+    cursorBlink() {
+        this.cursorVisible = !this.cursorVisible;
+        this.update();
+        setTimeout(() => this.cursorBlink(), 750);
+    }
+    update() {
+        const cursor = this.cursorVisible ? '<span class="accent-cursor">&#8203;<span style="border-left:2px solid var(--accent);height:1em;display:inline-block;margin-left:2px;margin-bottom:-2px;width:0.5em"></span></span>' : '<span class="accent-cursor">&#8203;<span style="border-left:2px solid var(--accent);height:1em;display:inline-block;margin-left:2px;margin-bottom:-2px;width:0.5em;opacity:0"></span></span>';
+        this.accent.innerHTML = this.base + this.typed + cursor;
+    }
+}
+
+/* ========================================
    Initialize
    ======================================== */
 document.addEventListener('DOMContentLoaded', () => {
     window._navbar = new Navbar();
     new PortraitReveal();
     initLenisScroll();
+    new HeroAccentTyping();
 });

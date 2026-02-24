@@ -126,6 +126,9 @@ html, body {
     letter-spacing: -0.02em; line-height: 0.95;
     margin-bottom: 24px; opacity: 0; transform: translateY(40px);
 }
+.hero-name .accent {
+    font-size: 90%;
+}
 .hero-title {
     font-size: 1.1rem; font-weight: 500; letter-spacing: 0.4em;
     opacity: 0; transform: translateY(20px);
@@ -366,4 +369,30 @@ html, body {
     .t-val { font-size: 0.7rem; }
     .contact-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
     .footer-copy, .footer-made { font-size: 0.6rem; }
+}
+
+/* Add blinking cursor style for accent typing */
+.accent-cursor {
+  display: inline-block;
+  width: 1ch;
+  color: var(--accent);
+  animation: blink-cursor 1s steps(1) infinite;
+}
+@keyframes blink-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Inline accent cursor style (aligned to text) */
+.accent-cursor {
+  display: inline;
+}
+.accent-cursor span {
+  border-left: 2px solid var(--accent);
+  height: 1em;
+  width: 0.5em;
+  display: inline-block;
+  margin-left: 2px;
+  margin-bottom: 0;
+  vertical-align: middle;
 }
