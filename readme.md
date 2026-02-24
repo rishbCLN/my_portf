@@ -2,7 +2,7 @@
 
 Live site → https://rshb-portf-omega.vercel.app
 
-<video src="gif_portf.mp4" autoplay loop muted playsinline width="100%"></video>
+![Image](https://github.com/user-attachments/assets/f1afa1e3-eeb9-4341-8642-e390a2a1dbaf)
 
 Built with HTML · CSS · JavaScript · GSAP · Three.js · Lenis
 
@@ -12,6 +12,6 @@ A frontend portfolio focused on motion and interaction design.
 Custom animations built from scratch — no templates, no UI libraries.
 
 - Hyperspace warp sequence on load
-- Canvas-based distortion reveal on the portrait
+- Hover distortion reveal on the portrait
 - Horizontally scrolling project showcase
 - Terminal-style contact section
